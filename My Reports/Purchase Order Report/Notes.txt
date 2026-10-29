@@ -1,0 +1,69 @@
+--> Sales Credit Note report
+//We create a GST Sales Credit Note report primarily to serve as a legal, tax-compliant document and 
+//a financial correction mechanism between you and your customer.
+
+When you issue a credit note, it reduces the amount a customer owes you (or returns money to them). 
+In a GST-regulated country like India, you cannot simply hand over an informal note; it must follow 
+strict compliance rules.
+Under GST laws, a Credit Note is a legal document that must contain specific details to be
+ recognized by the government. The report formats these details perfectly so you don't face penalties
+  during tax audits:
+  • GSTIN Matching: It cleanly displays your company's GSTIN and your customer's GSTIN side-by-side to prove who is reducing their tax liability.
+• HSN/SAC Breakdowns: It lists government-approved product classifications (HSN codes) alongside the exact GST percentages (e.g., 5%, 12%, 18%) being reversed.
+
+2. 💰 Claiming Tax Adjustments (Saving Money)
+
+When you originally sold the goods, you paid GST output tax to the government. If the customer returns those goods or gets a discount, you are entitled to get that tax money back (or offset it against future tax bills).
+• The report calculates the exact CGST, SGST, or IGST amounts being reversed.
+• Without this formal, structured report, you don't have a solid audit trail to justify why you paid less tax to the government this month.
+
+3. 🤝 Clear Communication with the Customer
+
+Your customer also needs to adjust their accounting records. Because you are reducing the invoice amount, they must reverse the Input Tax Credit (ITC) they previously claimed.
+• Providing them with a formal GST Credit Note PDF ensures their accountants know exactly how much tax adjustment to post on their end.
+• It prevents balance mismatches between your company and your client.
+
+4. 📦 Commercial Proof of Adjustment
+
+The report captures the exact business reason for the correction. It acts as the final printable receipt for scenarios like:
+• Goods Returns: The customer sent back damaged or incorrect stock.
+• Price Revisions: You accidentally overcharged the customer on the original invoice.
+• Post-Sale Discounts: You offered an agreed-upon volume discount after the sale was completed.
+
+
+• GST Jurisdiction Type: Classifies whether the trade was Intrastate (within the same state applying CGST+SGST) or Interstate (cross-border applying IGST).
+• reaks down the specific category of tax applied, separating entries into CGST (Central), SGST/UTGST (State/Union Territory), or IGST (Integrated for interstate).
+• GST %: The specific statutory rate applied to the line items (e.g., 5%, 12%, 18%, 28%).
+• Sales Cr.Memo Line keeps track of commercial facts: What did you sell? How many did you return? What was the price?
+• Detailed GST Ledger Entry keeps track of tax breakdowns: Exactly how much money goes to the Central Government (CGST), the State Government (SGST), or across state borders (IGST)?
+Here are the precise reasons why 
+When a Sales Credit Note is posted, the Sales Cr.Memo Line table records fields like Line Amount and HSN/SAC Code. However, it does not explicitly store fields called "CGST Amount" or "SGST Percentage".
+Instead, Business Central's tax engine calculates these numbers behind the scenes during posting and 
+writes the definitive entries straight into the Detailed GST Ledger Entry table. If you want the actual tax figures, this ledger table is the only place they live natively.
+------------ Request filter fields and  request page;------------------------------------------------
+
+If you use RequestFilterFields, you do not need to write anything inside the requestpage block. 
+Business Central will automatically create the layout, add the fields, handle the dropdown lookup lists, and filter the data for you behind the scenes.
+-----  RequestFilterFields = "No.", "Posting Date", "Bill-to Customer No.";--------------------------------
+
+ 1. Details of Receiver (The Billing Customer)
+
+The Receiver is the legal entity responsible for the financial part of the transaction. This is the company that gets the tax credit and must adjust their Input Tax Credit (ITC).
+• What it means: The person or company being billed.
+• BC Term to Use: Bill-to fields (or Sell-to if the billing and ordering customer are the same).
+• Fields to map into this section:
+	• Name: Header."Bill-to Name"
+	• Address: Header."Bill-to Address" + Header."Bill-to Address 2"
+	• GSTIN: Header."Customer GST Reg. No."
+	• State: Header."GST Bill-to State Code"
+
+🚚 2. Details of Consignee (The Shipping Location)
+
+The Consignee is the physical destination where the goods were actually delivered (or where the service was performed). GST laws refer to this location to establish the Place of Supply.
+• What it means: The person or company receiving the shipment.
+• BC Term to Use: Ship-to fields.
+• Fields to map into this section:
+	• Name: Header."Ship-to Name"
+	• Address: Header."Ship-to Address" + Header."Ship-to Address 2"
+	• GSTIN: Header."Ship-to GST Reg. No." (Critical for cases like Bill-to Ship-to transactions)
+	• State: Header."GST Ship-to State Code"
